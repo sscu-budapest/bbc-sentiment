@@ -2,4 +2,4 @@ name: bbc-sentiment
 version: v0.0
 aswan_projects:
   bbc-local:
-    current_leaf: 3895b4e992390d73da9e
+    current_leaf: af45a9ba26849d9613e4
