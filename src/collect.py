@@ -44,4 +44,5 @@ def get_locales_table():
         pd.read_table("locales.md", sep="|", header=0, skipinitialspace=True)
         .dropna(axis=1, how="all")
         .iloc[1:, :]
+        .rename(columns=str.strip)
     )
