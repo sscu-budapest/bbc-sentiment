@@ -21,12 +21,7 @@ class Collect(dz.DzAswan):
 
     def prepare_run(self):
 
-        push_ids = (
-            pd.read_table("locales.md", sep="|", header=0, skipinitialspace=True)
-            .dropna(axis=1, how="all")
-            .iloc[1:, -1]
-            .dropna()
-        )
+        push_ids = get_locales_table().iloc[:, -1].dropna().str.strip()
         argprod = product(list(range(1, PAGES_TO_PULL + 1)), push_ids)
         all_push_urls = list(map(create_push_url, argprod))
         self.starters = {BBCPatientCollector: all_push_urls}
@@ -42,3 +37,11 @@ def create_push_url(args):
         f"/isUk/{is_uk}/limit/{limit}/nitroKey/lx-nitro/pageNumber/{pnum}/version/1.5.6?timeout=5"
     )
     return add_url_params(push_base, {"t": push_t})
+
+
+def get_locales_table():
+    return (
+        pd.read_table("locales.md", sep="|", header=0, skipinitialspace=True)
+        .dropna(axis=1, how="all")
+        .iloc[1:, :]
+    )
