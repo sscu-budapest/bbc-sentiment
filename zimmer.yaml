@@ -1,10 +1,10 @@
 name: bbc-sentiment
 version: v0.0
-cron: "35 9,11,16 * * *"
+cron: 35 9,11,16 * * *
 envs:
   complete:
     params:
       last_days: 120
 aswan_projects:
   bbc-local:
-    current_leaf: 396b0a5ab26f8ddafa52
+    current_leaf: 1ba9ba82bf812acdf8a8
