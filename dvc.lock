@@ -1,0 +1,15 @@
+schema: '2.0'
+stages:
+  complete-basic_report:
+    cmd: dz run-step basic_report complete
+    deps:
+    - path: src/basic_report.py
+      md5: fa7772e28550e8e3b00c8a4dea55c9f8
+      size: 3183
+    params:
+      zimmer.yaml:
+        envs.complete.params.last_days: 120
+    outs:
+    - path: reports/complete/sentiment.jpg
+      md5: 84aeb92f05f3adc53f39676fa644c91b
+      size: 301937

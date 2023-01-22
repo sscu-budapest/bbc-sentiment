@@ -1,1 +1,3 @@
 datazimmer[collect]
+matplotlib
+nltk

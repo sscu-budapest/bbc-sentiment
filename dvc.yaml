@@ -1,0 +1,11 @@
+stages:
+  complete-basic_report:
+    cmd: dz run-step basic_report complete
+    deps:
+    - src/basic_report.py
+    params:
+    - zimmer.yaml:
+      - envs.complete.params.last_days
+    outs:
+    - reports/complete/sentiment.jpg:
+        cache: false
