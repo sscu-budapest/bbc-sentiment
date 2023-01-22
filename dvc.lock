@@ -4,12 +4,16 @@ stages:
     cmd: dz run-step basic_report complete
     deps:
     - path: src/basic_report.py
-      md5: fa7772e28550e8e3b00c8a4dea55c9f8
-      size: 3183
+      md5: 7303760f33bec2e5230fb66229c6f628
+      size: 3207
+    - path: src/collect.py
+      md5: f0f29b5aedc8c3859b63cfd1246c1831
+      size: 1261
     params:
       zimmer.yaml:
+        aswan_projects.bbc-local.current_leaf: 1ba9ba82bf812acdf8a8
         envs.complete.params.last_days: 120
     outs:
     - path: reports/complete/sentiment.jpg
-      md5: 84aeb92f05f3adc53f39676fa644c91b
-      size: 301937
+      md5: 9210058caadf198b36811e04757a0a7b
+      size: 301897

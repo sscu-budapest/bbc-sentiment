@@ -3,8 +3,10 @@ stages:
     cmd: dz run-step basic_report complete
     deps:
     - src/basic_report.py
+    - src/collect.py
     params:
     - zimmer.yaml:
+      - aswan_projects.bbc-local.current_leaf
       - envs.complete.params.last_days
     outs:
     - reports/complete/sentiment.jpg:

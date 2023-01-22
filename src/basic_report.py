@@ -29,7 +29,7 @@ renamer = {
 }
 
 
-@dz.register(outputs_nocache=[plot_jpg])
+@dz.register(outputs_nocache=[plot_jpg], dependencies=[Collect])
 def step(last_days: int):
     c = Collect()
     coll_df = pd.concat(map(_parse_pcev, c.get_all_events(BBCPatientCollector))).rename(
