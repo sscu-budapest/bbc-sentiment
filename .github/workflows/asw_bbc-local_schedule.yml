@@ -1,7 +1,7 @@
 name: Scheduled bbc-local
 on:
   schedule:
-  - cron: 15 9,11,16 * * *
+  - cron: 10 9 * * *
 jobs:
   cron-run-bbc-local:
     runs-on: ubuntu-latest

@@ -1,7 +1,7 @@
 name: Scheduled zimmer-project
 on:
   schedule:
-  - cron: 35 9,11,16 * * *
+  - cron: 35 9 * * *
 jobs:
   cron-run-zimmer-project:
     runs-on: ubuntu-latest
