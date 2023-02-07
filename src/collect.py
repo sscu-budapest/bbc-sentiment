@@ -17,7 +17,7 @@ class BBCPatientCollector(RequestJsonHandler):
 
 class Collect(dz.DzAswan):
     name = "bbc-local"
-    cron = "15 9,11,16 * * *"
+    cron = "10 9 * * *"
 
     def prepare_run(self):
 
