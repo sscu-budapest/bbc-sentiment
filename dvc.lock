@@ -7,13 +7,13 @@ stages:
       md5: 7303760f33bec2e5230fb66229c6f628
       size: 3207
     - path: src/collect.py
-      md5: f0f29b5aedc8c3859b63cfd1246c1831
-      size: 1261
+      md5: 920a4ac43c6f0282696b24fe31e2a2b5
+      size: 1255
     params:
       zimmer.yaml:
-        aswan_projects.bbc-local.current_leaf: d96dd0a819218423355a
+        aswan_projects.bbc-local.current_leaf: 7ec3f3d9e5e901608147
         envs.complete.params.last_days: 120
     outs:
     - path: reports/complete/sentiment.jpg
-      md5: 1e9d1308c21900a5b5be92bd341b08ce
-      size: 301827
+      md5: a6d6ccdfcd9eea0de0196cefa26dfe0b
+      size: 300789
