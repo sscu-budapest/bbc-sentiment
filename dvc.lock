@@ -11,9 +11,9 @@ stages:
       size: 1255
     params:
       zimmer.yaml:
-        aswan_projects.bbc-local.current_leaf: c1ed6658647af99d7a35
+        aswan_projects.bbc-local.current_leaf: 83bac091ab2e0a6dff69
         envs.complete.params.last_days: 120
     outs:
     - path: reports/complete/sentiment.jpg
-      md5: 9ed8b987ec6bacdf7a717bd11833ffc6
-      size: 297165
+      md5: 9bfe79357ce541b3d4a4b7e3bceda948
+      size: 294616
