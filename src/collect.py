@@ -4,7 +4,7 @@ import datazimmer as dz
 import pandas as pd
 from aswan import RequestJsonHandler, add_url_params
 
-PAGES_TO_PULL = 4
+PAGES_TO_PULL = 20
 
 
 class BBCPatientCollector(RequestJsonHandler):

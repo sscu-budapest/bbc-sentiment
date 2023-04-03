@@ -9,5 +9,11 @@ stages:
       - aswan_projects.bbc-local.current_leaf
       - envs.complete.params.last_days
     outs:
+    - data/bbc-sentiment/basic_report/complete/article.parquet:
+        persist: true
+    - data/bbc-sentiment/basic_report/complete/article_locator.parquet:
+        persist: true
+    - reports/complete/latest.md:
+        cache: false
     - reports/complete/sentiment.jpg:
         cache: false

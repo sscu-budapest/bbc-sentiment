@@ -7,6 +7,7 @@ import nltk
 import pandas as pd
 from aswan import ParsedCollectionEvent
 from nltk.sentiment import SentimentIntensityAnalyzer
+from structlog import get_logger
 
 from .collect import BBCPatientCollector, Collect, get_locales_table
 
@@ -23,20 +24,49 @@ class Article(dz.AbstractEntity):
     summary = str
 
 
+class ArticleLocator(dz.AbstractEntity):
+
+    article = dz.Index & Article
+    place_id = dz.Index & str
+
+
+article_table = dz.ScruTable(Article)
+article_location_table = dz.ScruTable(ArticleLocator)
+
 renamer = {
     "lastPublished": Article.published,
     "assetId": Article.aid,
 }
 
 
-@dz.register(outputs_nocache=[plot_jpg], dependencies=[Collect])
-def step(last_days: int):
+def load_data():
     c = Collect()
-    coll_df = pd.concat(map(_parse_pcev, c.get_all_events(BBCPatientCollector))).rename(
-        columns=renamer
+    coll_df = pd.concat(
+        map(_parse_pcev, c.get_unprocessed_events(BBCPatientCollector))
+    ).rename(columns=renamer)
+    article_table.replace_records(coll_df.drop_duplicates(subset=Article.aid))
+    article_location_table.replace_records(
+        coll_df.rename(columns={Article.aid: ArticleLocator.article.aid})
+        .loc[:, article_location_table.all_cols]
+        .drop_duplicates()
     )
-    ua_df = coll_df.drop_duplicates(subset=Article.aid).pipe(dz.parse_df, Article)
+
+
+@dz.register(
+    outputs_nocache=[plot_jpg, latest_md],
+    dependencies=[Collect],
+    outputs_persist=[article_location_table, article_table],
+)
+def step(last_days: int):
+
+    try:
+        load_data()
+    except ValueError as e:
+        get_logger().info(f"not loaded: {e}")
+
     locale_base = get_locales_table().dropna()
+    ua_df = article_table.get_full_df()
+    coll_df = article_location_table.get_full_df()
 
     nltk.download("vader_lexicon")
     sia = SentimentIntensityAnalyzer()
@@ -51,13 +81,12 @@ def step(last_days: int):
     ).assign(summary_minus_title=lambda df: df.diff(axis=1).iloc[:, -1])
 
     scored_regions = (
-        coll_df.loc[:, [Article.aid, "pid"]]
-        .drop_duplicates()
-        .merge(locale_base.assign(pid=lambda df: df.iloc[:, -1].str.strip().tolist()))
+        coll_df.reset_index()
+        .merge(locale_base.pipe(_locale_extend))
         .merge(
-            comp_score_df.assign(
-                **{Article.published: ua_df[Article.published]}
-            ).reset_index()
+            comp_score_df.assign(**{Article.published: ua_df[Article.published]}),
+            left_on=ArticleLocator.article.aid,
+            right_index=True,
         )
     )
 
@@ -107,7 +136,12 @@ def step(last_days: int):
 
 
 def _parse_pcev(pcev: ParsedCollectionEvent):
-    push_id, page_num = re.findall("(uk-england-\d+).*pageNumber%2F(\d+)", pcev.url)[0]
+    push_id, _ = re.findall("(uk-england-\d+).*pageNumber%2F(\d+)", pcev.url)[0]
     return pd.DataFrame(pcev.content["payload"][0]["body"]["results"]).assign(
-        page=int(page_num), pid=push_id
+        **{ArticleLocator.place_id: push_id}
     )
+
+
+def _locale_extend(df):
+    aser = df.iloc[:, -1].str.strip().tolist()
+    return df.assign(**{ArticleLocator.place_id: aser})
