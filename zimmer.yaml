@@ -1,6 +1,6 @@
 name: bbc-sentiment
 version: v0.0
-cron: 35 9 * * *
+cron: 15 10 * * *
 envs:
   complete:
     params:
