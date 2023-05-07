@@ -8,7 +8,6 @@ PAGES_TO_PULL = 20
 
 
 class BBCPatientCollector(RequestJsonHandler):
-
     max_in_parallel = 4
 
     def get_sleep_time(self):
@@ -20,7 +19,6 @@ class Collect(dz.DzAswan):
     cron = "10 9 * * *"
 
     def prepare_run(self):
-
         push_ids = get_locales_table().iloc[:, -1].dropna().str.strip()
         argprod = product(list(range(1, PAGES_TO_PULL + 1)), push_ids)
         all_push_urls = list(map(create_push_url, argprod))
