@@ -16,7 +16,6 @@ latest_md = dz.ReportFile("latest.md")
 
 
 class Article(dz.AbstractEntity):
-
     aid = dz.Index & str
     published = dt.datetime
     url = str
@@ -25,7 +24,6 @@ class Article(dz.AbstractEntity):
 
 
 class ArticleLocator(dz.AbstractEntity):
-
     article = dz.Index & Article
     place_id = dz.Index & str
 
@@ -33,17 +31,20 @@ class ArticleLocator(dz.AbstractEntity):
 article_table = dz.ScruTable(Article)
 article_location_table = dz.ScruTable(ArticleLocator)
 
-renamer = {
-    "lastPublished": Article.published,
-    "assetId": Article.aid,
-}
-
 
 def load_data():
     c = Collect()
-    coll_df = pd.concat(
-        map(_parse_pcev, c.get_unprocessed_events(BBCPatientCollector))
-    ).rename(columns=renamer)
+    coll_df = (
+        pd.concat(map(_parse_pcev, c.get_unprocessed_events(BBCPatientCollector)))
+        .assign(
+            **{
+                Article.published: lambda df: pd.to_datetime(
+                    df["lastPublished"]
+                ).dt.tz_localize(None)
+            }
+        )
+        .rename(columns={"assetId": Article.aid})
+    )
     article_table.replace_records(coll_df.drop_duplicates(subset=Article.aid))
     article_location_table.replace_records(
         coll_df.rename(columns={Article.aid: ArticleLocator.article.aid})
@@ -58,7 +59,6 @@ def load_data():
     outputs_persist=[article_location_table, article_table],
 )
 def step(last_days: int):
-
     try:
         load_data()
     except ValueError as e:
