@@ -11,18 +11,18 @@ stages:
       size: 1254
     params:
       zimmer.yaml:
-        aswan_projects.bbc-local.current_leaf: 5875cdb44908349f5c76
+        aswan_projects.bbc-local.current_leaf: 8c1b7f73e97e34fbc851
         envs.complete.params.last_days: 120
     outs:
     - path: data/bbc-sentiment/basic_report/complete/article.parquet
-      md5: 2b8d134933a076a7d19dd7653bb7e6b7
-      size: 7183524
+      md5: cc5da652eabfe16073d5ce11148864b4
+      size: 7207040
     - path: data/bbc-sentiment/basic_report/complete/article_locator.parquet
-      md5: fc3600713fa6955a8949629f2a7119ee
-      size: 595496
+      md5: 6a4c08c2e9d13fa52dc3637c3b4dae75
+      size: 597650
     - path: reports/complete/latest.md
-      md5: f0ee5fa126efc7c3e775a4ba9fe2a908
-      size: 4080
+      md5: b01150ec1b61621cb27c3c3d3a96d6c2
+      size: 4139
     - path: reports/complete/sentiment.jpg
-      md5: 41d11ba76f6a3f573f6fd4fb8ca88035
-      size: 295562
+      md5: 39fcef570da0207d249abab6822b1df2
+      size: 295732
