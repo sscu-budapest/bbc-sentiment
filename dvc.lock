@@ -4,25 +4,31 @@ stages:
     cmd: dz run-step basic_report complete
     deps:
     - path: src/basic_report.py
+      hash: md5
       md5: d0be48d45680ba7c1ee60a4d567c6977
       size: 4164
     - path: src/collect.py
+      hash: md5
       md5: a781b4ef1a26b31931fd25868aebcf45
       size: 1254
     params:
       zimmer.yaml:
-        aswan_projects.bbc-local.current_leaf: f163b5723cfdd89a9ff8
+        aswan_projects.bbc-local.current_leaf: 17fbed27b0fc0c5d27dc
         envs.complete.params.last_days: 120
     outs:
     - path: data/bbc-sentiment/basic_report/complete/article.parquet
-      md5: b4c3bdd97d3b74e81a3c46bc74d5890b
-      size: 7448030
+      hash: md5
+      md5: 03a676581fcf32b91c5b628c76bc237f
+      size: 7680706
     - path: data/bbc-sentiment/basic_report/complete/article_locator.parquet
-      md5: de7ec6b956945128a01eff4dda994c78
-      size: 618563
+      hash: md5
+      md5: 8dd00e1745884e2692d259a0f45a5230
+      size: 640390
     - path: reports/complete/latest.md
-      md5: 3b70d539f8061c182dff43b3a85a3a43
-      size: 4128
+      hash: md5
+      md5: 7a03a0d5ecfd5f8d24e0a91cba242fdd
+      size: 4355
     - path: reports/complete/sentiment.jpg
-      md5: 093620e1068bab43dd1d5620b371c581
-      size: 294630
+      hash: md5
+      md5: 86de8e5a3d6dea057224ac2800cd4b93
+      size: 297365
