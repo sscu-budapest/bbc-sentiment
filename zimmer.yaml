@@ -7,4 +7,4 @@ envs:
       last_days: 120
 aswan_projects:
   bbc-local:
-    current_leaf: 46a745b906114e450102
+    current_leaf: d23c8bed16b8f99a590c
